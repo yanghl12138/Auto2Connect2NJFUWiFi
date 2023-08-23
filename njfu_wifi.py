@@ -18,7 +18,7 @@ def login(username:str, password:str, url:str) -> str:
             "para":"00",
             "0MKKey":"123456"
     }
-    return requests.post(url=url, data=data, headers=headers).text
+    return requests.post(url=url, data=data, headers=headers, timeout=10).text
 
 # Ping, 检测网络连通性
 def ping(host:str) -> bool:
@@ -29,6 +29,6 @@ def ping(host:str) -> bool:
 def connect2wifi(name:str):
     match platform.system().lower():
         case 'windows':
-            subprocess.run(['netsh', 'wlan', 'connect', f'name={name}'])
+            subprocess.run(['netsh', 'wlan', 'connect', f'name={name}'], timeout=4)
         case _:
             raise NotImplementedError()

@@ -42,19 +42,20 @@ if __name__ == "__main__":
             result = False
         if result:
             failure = 0
-            succ = min(10, succ + 1)
+            succ = succ + 1
             logging.info("pong!")
         else:
             succ = 0
             failure = failure + 1
             logging.warning("Fail Connenct to Internet")
             if failure >= args.failure:
-                logging.info("Login Cmcc")
+                logging.info(f"Login {args.wifi}")
                 try:
                     njfu_wifi.connect2wifi(args.wifi)
                     sleep(8)
                     njfu_wifi.login(args.username, args.password, args.url)
                     logging.info("Login Sucess!")
+                    failure = 0
                 except:
                     logging.error("Login Fail!")
-        sleep(3 * max(1, succ))
+        sleep(min(max(1, succ), 10)) # 1 <= succ <= 10
