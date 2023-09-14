@@ -29,6 +29,7 @@ def ping(host:str) -> bool:
 def connect2wifi(name:str):
     match platform.system().lower():
         case 'windows':
-            subprocess.run(['netsh', 'wlan', 'connect', f'name={name}'], timeout=4)
+            ret = subprocess.run(['netsh', 'wlan', 'connect', f'name={name}'], timeout=4).returncode == 0
         case _:
             raise NotImplementedError()
+    return ret
